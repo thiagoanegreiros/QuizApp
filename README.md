@@ -2,6 +2,7 @@
 
 ![CI](https://github.com/thiagoanegreiros/quiz-app/actions/workflows/ci.yml/badge.svg)
 ![CodeQL](https://github.com/thiagoanegreiros/quiz-app/actions/workflows/codeql.yml/badge.svg)
+![Codecov](https://codecov.io/gh/thiagoanegreiros/quiz-app/branch/master/graph/badge.svg)(https://codecov.io/gh/thiagoanegreiros/quiz-app)
 ![React](https://img.shields.io/badge/react-19.x-blue)
 ![TypeScript](https://img.shields.io/badge/typescript-5.x-blue)
 ![Vite](https://img.shields.io/badge/vite-fast%20builds-purple)
@@ -9,6 +10,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![ESLint](https://img.shields.io/badge/eslint-configured-blue)
 ![Prettier](https://img.shields.io/badge/prettier-formatted-critical)
+![husky](https://img.shields.io/badge/husky-pre--commit%20hook-enabled.svg)
 
 This is a **React + Vite** frontend application built with **TypeScript** and styled using **Tailwind CSS**, designed to present trivia quizzes fetched from the [Open Trivia Database API](https://opentdb.com/).
 
