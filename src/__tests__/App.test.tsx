@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from '../App';
 import { BrowserRouter } from 'react-router-dom';
+import '@testing-library/jest-dom'
 
 describe('App component', () => {
   it('should render button with count and increment when clicked', () => {
