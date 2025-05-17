@@ -23,7 +23,7 @@ This is a **React + Vite** frontend application built with **TypeScript** and st
 - ✅ Answer selection with highlight logic
 - ✅ Score-based results screen with color scale
 - ✅ Routing with `react-router-dom`
-- ✅ Prettier + ESLint configured
+- ✅ Unit tests and Code Coverage
 
 ---
 
