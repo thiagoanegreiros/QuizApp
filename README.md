@@ -6,7 +6,7 @@
 ![React](https://img.shields.io/badge/react-19.x-blue)
 ![TypeScript](https://img.shields.io/badge/typescript-5.x-blue)
 ![Vite](https://img.shields.io/badge/vite-fast%20builds-purple)
-![Tailwind](https://img.shields.io/badge/tailwindcss-3.x-blue)
+![Tailwind](https://img.shields.io/badge/tailwindcss-4.x-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![ESLint](https://img.shields.io/badge/eslint-configured-blue)
 ![Prettier](https://img.shields.io/badge/prettier-formatted-critical)
