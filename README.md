@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/thiagoanegreiros/quiz-app/actions/workflows/ci.yml/badge.svg)
 ![CodeQL](https://github.com/thiagoanegreiros/quiz-app/actions/workflows/codeql.yml/badge.svg)
-![Codecov](https://codecov.io/gh/thiagoanegreiros/quiz-app/branch/master/graph/badge.svg)(https://codecov.io/gh/thiagoanegreiros/quiz-app)
+[![Codecov](https://codecov.io/gh/thiagoanegreiros/quiz-app/branch/main/graph/badge.svg)](https://codecov.io/gh/thiagoanegreiros/quiz-app)
 ![React](https://img.shields.io/badge/react-19.x-blue)
 ![TypeScript](https://img.shields.io/badge/typescript-5.x-blue)
 ![Vite](https://img.shields.io/badge/vite-fast%20builds-purple)
