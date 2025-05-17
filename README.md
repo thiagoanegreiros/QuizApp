@@ -1,5 +1,7 @@
 # 🧠 Trivia Quiz App - React + TypeScript + Vite
 
+Live on https://quiz-app-l0pe.onrender.com/
+
 ![CI](https://github.com/thiagoanegreiros/quiz-app/actions/workflows/ci.yml/badge.svg)
 ![CodeQL](https://github.com/thiagoanegreiros/quiz-app/actions/workflows/codeql.yml/badge.svg)
 [![codecov](https://codecov.io/gh/thiagoanegreiros/quiz-app/branch/master/graph/badge.svg)](https://codecov.io/gh/thiagoanegreiros/quiz-app)
