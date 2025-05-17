@@ -1,0 +1,15 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+import App from '../App';
+
+describe('App component', () => {
+  it('should render button with count and increment when clicked', () => {
+    render(<App />);
+
+    const button = screen.getByRole('button', { name: /Count 0/i });
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+
+    expect(screen.getByRole('button', { name: /Count 1/i })).toBeInTheDocument();
+  });
+});
