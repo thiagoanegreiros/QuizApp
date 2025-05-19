@@ -20,7 +20,9 @@ describe('QuizSetup Component', () => {
     expect(await screen.findByText(/Create Your Quiz/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/select category/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/select difficulty/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /create quiz/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /create quiz/i }),
+    ).toBeInTheDocument();
   });
 
   it('loads categories into the category select', async () => {
@@ -64,15 +66,22 @@ describe('QuizSetup Component', () => {
   });
 
   it('logs error if getCategories fails', async () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     const TriviaService = await import('../../services/TriviaService');
 
-    (TriviaService.default.getCategories as jest.Mock).mockRejectedValueOnce(new Error('API error'));
+    (TriviaService.default.getCategories as jest.Mock).mockRejectedValueOnce(
+      new Error('API error'),
+    );
 
     render(<QuizSetup />);
     await screen.findByText(/Create Your Quiz/i);
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith('Error loading categories:', expect.any(Error));
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Error loading categories:',
+      expect.any(Error),
+    );
     consoleErrorSpy.mockRestore();
   });
 });
