@@ -9,6 +9,16 @@ jest.mock('../../services/TriviaService', () => ({
       { id: 9, name: 'General Knowledge' },
       { id: 10, name: 'Books' },
     ]),
+    getQuestions: jest.fn().mockResolvedValue([
+      {
+        question: 'What is the capital of France?',
+        correct_answer: 'Paris',
+        incorrect_answers: ['Lyon', 'Marseille', 'Toulouse'],
+        category: 'Geography',
+        type: 'multiple',
+        difficulty: 'easy',
+      },
+    ]),
   },
 }));
 
@@ -46,8 +56,6 @@ describe('QuizSetup Component', () => {
   });
 
   it('logs selected values when clicking "Create Quiz"', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
     render(<QuizSetup />);
     await screen.findByText('General Knowledge');
 
@@ -59,10 +67,9 @@ describe('QuizSetup Component', () => {
     await userEvent.selectOptions(difficultySelect, 'hard');
     await userEvent.click(createButton);
 
-    expect(consoleSpy).toHaveBeenCalledWith('Selected category:', '9');
-    expect(consoleSpy).toHaveBeenCalledWith('Selected difficulty:', 'hard');
-
-    consoleSpy.mockRestore();
+    expect(
+      await screen.findByText(/What is the capital of France\?/i),
+    ).toBeInTheDocument();
   });
 
   it('logs error if getCategories fails', async () => {
@@ -83,5 +90,64 @@ describe('QuizSetup Component', () => {
       expect.any(Error),
     );
     consoleErrorSpy.mockRestore();
+  });
+
+  it('does not fetch questions if no category is selected', async () => {
+    render(<QuizSetup />);
+    await screen.findByLabelText(/select category/i);
+    const createButton = await screen.getByRole('button', {
+      name: /create quiz/i,
+    });
+    expect(createButton).toBeDisabled();
+  });
+
+  it('shows "Submit Quiz" button after all questions are answered', async () => {
+    render(<QuizSetup />);
+
+    await screen.findByText('General Knowledge');
+
+    await userEvent.selectOptions(
+      screen.getByLabelText(/select category/i),
+      '9',
+    );
+    await userEvent.selectOptions(
+      screen.getByLabelText(/select difficulty/i),
+      'easy',
+    );
+    await userEvent.click(screen.getByRole('button', { name: /create quiz/i }));
+
+    const answerBtn = await screen.findByRole('button', { name: 'Paris' });
+    await userEvent.click(answerBtn);
+
+    expect(
+      screen.getByRole('button', { name: /submit quiz/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('logs answers when submitting the quiz', async () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    render(<QuizSetup />);
+
+    await screen.findByText('General Knowledge');
+
+    await userEvent.selectOptions(
+      screen.getByLabelText(/select category/i),
+      '9',
+    );
+    await userEvent.selectOptions(
+      screen.getByLabelText(/select difficulty/i),
+      'easy',
+    );
+    await userEvent.click(screen.getByRole('button', { name: /create quiz/i }));
+
+    const answerBtn = await screen.findByRole('button', { name: 'Paris' });
+    await userEvent.click(answerBtn);
+
+    const submitBtn = screen.getByRole('button', { name: /submit quiz/i });
+    await userEvent.click(submitBtn);
+
+    expect(consoleSpy).toHaveBeenCalledWith('User answers:', { 0: 'Paris' });
+    consoleSpy.mockRestore();
   });
 });

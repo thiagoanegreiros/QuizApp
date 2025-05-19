@@ -2,7 +2,7 @@ import TriviaService from '../../services/TriviaService';
 
 describe('TriviaService', () => {
   beforeEach(() => {
-    global.fetch = jest.fn(); // ou jest.fn() se você estiver usando Jest
+    global.fetch = jest.fn();
   });
 
   afterEach(() => {
