@@ -21,10 +21,7 @@
       "request": "launch",
       "name": "Lint Fix",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "lint-fix"
-      ],
+      "runtimeArgs": ["run", "lint-fix"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
