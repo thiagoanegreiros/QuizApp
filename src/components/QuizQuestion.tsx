@@ -35,7 +35,7 @@ export const QuizQuestion: React.FC<QuizQuestionProps> = ({
               key={index}
               className={buttonStyle}
               disabled={isResultMode}
-              onClick={() => onSelect(option)}
+              onClick={() => onSelect?.(option)}
             >
               {he.decode(option)}
             </button>

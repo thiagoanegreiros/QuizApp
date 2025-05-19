@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import TriviaService from '../services/TriviaService';
 import type { Category, TriviaQuestion } from '../types/trivia';
 import { QuizQuestion } from './QuizQuestion';
+import { useNavigate } from 'react-router-dom';
 
-export const QuizSetup = () => {
+export const Quiz = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [difficulty, setDifficulty] = useState('easy');
@@ -119,7 +121,12 @@ export const QuizSetup = () => {
             <button
               className="mt-4 px-6 py-2 bg-green-600 text-white font-bold rounded hover:bg-green-700"
               onClick={() => {
-                console.log('User answers:', answers);
+                navigate('/results', {
+                  state: {
+                    questions,
+                    answers,
+                  },
+                });
               }}
             >
               Submit Quiz

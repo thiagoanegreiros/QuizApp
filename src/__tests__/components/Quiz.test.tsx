@@ -1,6 +1,18 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import { Quiz } from '../../components/Quiz';
+
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => {
+  const actual = jest.requireActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
 
 jest.mock('../../services/TriviaService', () => ({
   __esModule: true,
@@ -22,11 +34,13 @@ jest.mock('../../services/TriviaService', () => ({
   },
 }));
 
-import { QuizSetup } from '../../components/QuizSetup';
-
-describe('QuizSetup Component', () => {
+describe('Quiz Component', () => {
   it('renders heading, selects and button correctly', async () => {
-    render(<QuizSetup />);
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
     expect(await screen.findByText(/Create Your Quiz/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/select category/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/select difficulty/i)).toBeInTheDocument();
@@ -36,13 +50,21 @@ describe('QuizSetup Component', () => {
   });
 
   it('loads categories into the category select', async () => {
-    render(<QuizSetup />);
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
     expect(await screen.findByText('General Knowledge')).toBeInTheDocument();
     expect(screen.getByText('Books')).toBeInTheDocument();
   });
 
   it('allows user to select category and difficulty', async () => {
-    render(<QuizSetup />);
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
     await screen.findByText('General Knowledge');
 
     const categorySelect = screen.getByLabelText(/select category/i);
@@ -55,8 +77,12 @@ describe('QuizSetup Component', () => {
     expect(difficultySelect).toHaveValue('medium');
   });
 
-  it('logs selected values when clicking "Create Quiz"', async () => {
-    render(<QuizSetup />);
+  it('loads and shows question after clicking "Create Quiz"', async () => {
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
     await screen.findByText('General Knowledge');
 
     const categorySelect = screen.getByLabelText(/select category/i);
@@ -82,7 +108,11 @@ describe('QuizSetup Component', () => {
       new Error('API error'),
     );
 
-    render(<QuizSetup />);
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
     await screen.findByText(/Create Your Quiz/i);
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -93,19 +123,24 @@ describe('QuizSetup Component', () => {
   });
 
   it('does not fetch questions if no category is selected', async () => {
-    render(<QuizSetup />);
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
     await screen.findByLabelText(/select category/i);
-    const createButton = await screen.getByRole('button', {
-      name: /create quiz/i,
-    });
+    const createButton = screen.getByRole('button', { name: /create quiz/i });
     expect(createButton).toBeDisabled();
   });
 
   it('shows "Submit Quiz" button after all questions are answered', async () => {
-    render(<QuizSetup />);
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
 
     await screen.findByText('General Knowledge');
-
     await userEvent.selectOptions(
       screen.getByLabelText(/select category/i),
       '9',
@@ -124,13 +159,14 @@ describe('QuizSetup Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('logs answers when submitting the quiz', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
-    render(<QuizSetup />);
+  it('navigates to results with answers on submit', async () => {
+    render(
+      <MemoryRouter>
+        <Quiz />
+      </MemoryRouter>,
+    );
 
     await screen.findByText('General Knowledge');
-
     await userEvent.selectOptions(
       screen.getByLabelText(/select category/i),
       '9',
@@ -147,7 +183,11 @@ describe('QuizSetup Component', () => {
     const submitBtn = screen.getByRole('button', { name: /submit quiz/i });
     await userEvent.click(submitBtn);
 
-    expect(consoleSpy).toHaveBeenCalledWith('User answers:', { 0: 'Paris' });
-    consoleSpy.mockRestore();
+    expect(mockNavigate).toHaveBeenCalledWith('/results', {
+      state: {
+        questions: expect.any(Array),
+        answers: { 0: 'Paris' },
+      },
+    });
   });
 });

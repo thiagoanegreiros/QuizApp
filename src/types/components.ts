@@ -3,5 +3,5 @@ export interface QuizQuestionProps {
   options: string[];
   correctAnswer?: string;
   selectedAnswer?: string;
-  onSelect: (option: string) => void;
+  onSelect?: (option: string) => void;
 }
