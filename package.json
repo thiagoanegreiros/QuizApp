@@ -10,7 +10,8 @@
     "lint-fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write .",
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check": "npm run lint-fix && npm run format && npm run test"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",

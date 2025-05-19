@@ -54,7 +54,7 @@ This project demonstrates a functional React application from scratch using:
 - Dropdowns:
   - `categorySelect` (ID for category dropdown)
   - `difficultySelect` (ID for difficulty dropdown)
-- Start button:  
+- Start button:
   - `createBtn` (ID for quiz start)
 
 ---
@@ -90,6 +90,7 @@ npm install
 # Start development server
 npm run dev
 ```
+
 ---
 
 ## 🧪 Running Tests with Coverage
@@ -99,6 +100,7 @@ To execute all tests and generate a coverage report:
 ```bash
 npm test -- --coverage --watchAll=false
 ```
+
 ---
 
 🧪 Running Lint & Format

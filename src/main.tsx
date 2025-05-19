@@ -18,7 +18,7 @@ export function bootstrapApp() {
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 }
-bootstrapApp()
+bootstrapApp();
